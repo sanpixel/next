@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { getSupabase, initializeSupabase } from '../supabaseClient';
+import { initializeSupabase } from '../supabaseClient';
 
 export default function Auth() {
   const [session, setSession] = useState(null);
