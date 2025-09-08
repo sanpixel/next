@@ -9,10 +9,7 @@ const PORT = process.env.PORT || 8080;
 app.use(cors());
 app.use(express.json());
 
-// Serve static files from Next.js build
-app.use(express.static(path.join(__dirname, '../frontend/out')));
-
-// API routes
+// API routes FIRST - before static files
 app.get('/api/health', (req, res) => {
   res.json({ status: 'OK', service: 'next', port: PORT });
 });
@@ -26,6 +23,9 @@ app.get('/api/config', (req, res) => {
     deployUrl: process.env.CLOUD_RUN_URL
   });
 });
+
+// Serve static files from Next.js build AFTER API routes
+app.use(express.static(path.join(__dirname, '../frontend/out')));
 
 // Catch-all handler: send back Next.js index.html file for any non-API routes
 app.get('*', (req, res) => {
